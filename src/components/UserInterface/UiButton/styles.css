@@ -1,0 +1,32 @@
+.ui-button {
+    background: unset;
+    border-radius: 4px;
+    text-decoration: none;
+    padding: 8px 10px;
+    white-space: nowrap;
+    cursor: pointer;
+} :disabled {
+    color: grey;
+    opacity: 0.7;
+    cursor: default;
+}
+
+.ui-button--pattern {
+    background: transparent;
+    border: 2px solid #25bac5;
+}
+
+.ui-button--pattern:hover{
+    background: #c9d4d4;
+    border: 2px solid #1a8c94;
+}
+
+.ui-button--success {
+    background: #d8db11 ;
+    border: 1px solid #d8db11;
+}
+
+.ui-button--success:hover {
+    background: #b1b1ad ;
+    border: 1px solid #656610;
+}
