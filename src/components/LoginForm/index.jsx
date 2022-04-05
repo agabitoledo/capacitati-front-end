@@ -38,15 +38,16 @@ const LoginForm = () => {
 
     const handleSubimit = (e) => {
         e.preventDefault();
-        UserService.login(form);
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData); //ES2019 - Object.fromEntries convert a list-key-value (array) in a object
-        console.log('formData', formData)
-        console.log('data', data)
-    };
-    console.log('joiwsjodjsad', userInfo)
+        // const formData = new FormData(e.target);
+        // const data = Object.fromEntries(formData); //ES2019 - Object.fromEntries convert a list-key-value (array) in a object
+        console.log('form', form)
+        UserService.login(form)
+            .then((response) => setUserInfo(response.data)).catch((err) => {console.error('ops', err)})
+        };
+
     return (
         <>
+        
             <FormLogin
                 // action="" method=''
                 onSubmit={handleSubimit}
@@ -54,8 +55,8 @@ const LoginForm = () => {
                 <InputLogin type='text' name='email' placeholder='E-mail' onChange={handleInput} value={form.email || ''} />
                 <InputLogin type='text' name='password' placeholder='Senha' onChange={handleInput} value={form.password || ''} />
                 <UiButton type="submit">Loguin</UiButton >
-                {userInfo !== null ? <h2>Bem vindo, {userInfo.user.firstName + ' ' + userInfo.user.lastName}</h2> : <h3>SAI DAQUI</h3>}
-                <UiButton onClick={(e)=> setUserInfo(null)}>Deslogar</UiButton>
+                {userInfo && userInfo.user ? <h2>Bem vindo, {userInfo.user.firstName} !</h2> : <h3>SAI DAQUI</h3> }
+                <UiButton onClick={(e) => setUserInfo(null)}>Deslogar</UiButton>
             </FormLogin>
         </>
     )
