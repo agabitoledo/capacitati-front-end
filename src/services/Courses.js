@@ -9,4 +9,12 @@ const getListClass = async (courseId) => {
     }
 }
 
-export {getListClass};
+const getCourseList = async () => {
+    try {
+       return await api.get('course')
+    } catch (error) {
+        console('getCourseListService', error)
+        return error;
+    }
+}
+export {getListClass, getCourseList};
