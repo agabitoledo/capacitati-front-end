@@ -10,6 +10,7 @@ export default function Homepage () {
             setCourseList(response.data)
             console.log('dentro do useeffect', response.data)
         })
+        
     })
 
     return (

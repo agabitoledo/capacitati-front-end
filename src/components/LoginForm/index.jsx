@@ -10,6 +10,7 @@ const FormLogin = styled.form`
     padding: 8px;
     display: flex;
     flex-direction: column;
+    
 `
 const InputLogin = styled.input`
 font-family: inherit;

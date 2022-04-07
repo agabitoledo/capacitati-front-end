@@ -21,6 +21,7 @@ const StyledCard = styled.button`
         color: #333;
         font-weight: bold;
     }
+    
     .card-text {
         font-size: 16px;
         color: #666;

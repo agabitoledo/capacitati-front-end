@@ -4,6 +4,7 @@ export default function Modal ({ id='modal',onClose=()=>{}, children }){
     const handleOutsideClick = (e) => {
         if(e.target.id === id) return onClose();
     }
+    
     return (
         <div id={id}className="modal" onClick={handleOutsideClick} >
             <div className="container">

@@ -17,4 +17,5 @@ const getCourseList = async () => {
         return error;
     }
 }
+
 export {getListClass, getCourseList};
