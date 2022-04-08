@@ -77,7 +77,7 @@ const Header = (props) => {
             <Modal onClose={() => setOpen(false)}> <LoginForm /> </Modal>
         }
             <StyledHeader {...props}>
-                <Link className='logo-header' to='/homepage'>Hitss On</Link>
+                <Link className='logo-header' to='/'>Hitss On</Link>
                 {
                 userInfo 
                     ? 
