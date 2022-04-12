@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AuthContext } from '../../../contexts/AuthContext.js'
 import UiButton from '../UiButton/index.jsx';
-import Modal from '../../Modal';
 import LoginForm from '../../LoginForm';
+import Modal from '../Modal/index.jsx';
 
 const StyledHeader = styled.nav`
     box-sizing: border-box;
@@ -16,7 +16,7 @@ const StyledHeader = styled.nav`
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    background-color: #54d3c89d;
+    background-color: #54d3c8;
     color: #6666;
     padding: 0 32px;
     flex-grow: 0;
@@ -84,7 +84,8 @@ const Header = (props) => {
                     <Dropdown className='dropdown'>
                         <span>{userInfo.user.firstName}</span>
                         <div className='dropdown-content'>
-                            <p onClick={()=> navigate('/homepage')}>TestPage</p>
+                            <p onClick={()=> navigate('/teste')}>TestPage</p>
+                            <p onClick={()=> navigate('/admin')}>Administrador</p>
                             <p onClick={()=> setUserInfo(null)}>Logout</p>
                         </div>
                     </Dropdown> 

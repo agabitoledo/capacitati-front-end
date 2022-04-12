@@ -1,7 +1,6 @@
 import React from 'react';
 import Counter from '../../components/Counter';
-import Modal from '../../components/Modal';
-import '../../assets/style.scss';
+import Modal from '../../components/UserInterface/Modal';
 import LoginForm from '../../components/LoginForm';
 import * as UserService from '../../services/Users'
 
@@ -27,7 +26,6 @@ function TestePage() {
               <LoginForm />
             </Modal> : null}
         </div>
-        
     </>
   );
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import './assets/style.scss';
 import Header from './components/UserInterface/Header';
 import AllRotes from './routes/allRotes.js';
 import styled from 'styled-components';
