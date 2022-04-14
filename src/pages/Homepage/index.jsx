@@ -21,9 +21,8 @@ export default function Homepage() {
     useEffect(() => {
         getCourseList().then((response) => {
             setCourseList(response.data)
-            console.log('dentro do useeffect', response.data)
         })
-    })
+    }, []);
 
     return (
         <div>
@@ -31,10 +30,10 @@ export default function Homepage() {
                 {
                     courseList.map((item) => (
                         <Card
-                            key={item.id + '-course'}
+                            key={item.courseId + '-course'}
                             title={<><span>Curso: </span>{item.title}</>}
                             body={item.description}
-                            onClick={() => navigate(`/aula/${item.courseId}`)} //Id is the CourseId, in this case.
+                            onClick={() => navigate(`/curso/${item.courseId}`)} //Id is the CourseId, in this case.
                         />
                     ))
                 }

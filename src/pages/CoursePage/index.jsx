@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getCourseById, getListClass } from '../../services/Courses';
 import { Card } from '../../components/Card';
 import styled from 'styled-components';
+import { AuthContext } from '../../contexts/AuthContext';
+import UiButton from '../../components/UserInterface/UiButton';
 
 const CourseContainer = styled.div`
     width: 80%;
@@ -47,7 +49,7 @@ const CourseContainer = styled.div`
 const CoursePage = () => {
     const [classList, setClassList] = useState([]);
     const [courseInfo, setCourseInfo] = useState({});
-    console.log('courseInfi', courseInfo)
+    const { isAdmin } = React.useContext(AuthContext);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -57,35 +59,40 @@ const CoursePage = () => {
         const course = await getCourseById(id);
         setClassList(classes.data);
         setCourseInfo(course.data[0]);
-
     };
 
     useEffect(() => {
-        getInformation(params.id)
-    }, [params.id])
+        getInformation(params.id);
+    }, [params.id]);
 
     return (
-        <div>
-            <CourseContainer>
-                <div className="list-row">
-                    <div className="title-header"></div>
-                    {
-                        classList && classList.map((item)=> (
-                            <Card 
-                                key={item.id}
-                                onClick={()=> navigate('teste')}
-                                title={<><b>Aula {item.number}: </b> {item.title} </>}
-                                body={item.description}
-                            />
-                        ))
-                    }
-                </div>
-                <div className="description">
-                    <h3 className="title-description">Sobre este curso</h3>
-                    <p className="info-description">{courseInfo.description}</p>
-                </div>
-            </CourseContainer>
-        </div>
+        <>
+            <div>
+                <CourseContainer>
+                    <div className="list-row">
+                        <div className="title-header">{courseInfo.title}</div>
+                        {
+                            isAdmin &&
+                            <UiButton onClick={() => navigate(`/nova-aula/${courseInfo.courseId}`)}>Adicionar aula</UiButton>
+                        }
+                        {
+                            classList && classList.map((item) => (
+                                <Card
+                                    key={item.id}
+                                    onClick={() => navigate()}
+                                    title={<><b>Aula {item.number}: </b> {item.title} </>}
+                                    body={item.description}
+                                />
+                            ))
+                        }
+                    </div>
+                    <div className="description">
+                        <h3 className="title-description">Sobre este curso</h3>
+                        <p className="info-description">{courseInfo.description}</p>
+                    </div>
+                </CourseContainer>
+            </div>
+        </>
     )
 }
 

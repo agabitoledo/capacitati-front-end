@@ -44,7 +44,6 @@ const  updateCourse = async (id, body) => {
         return error;
     }
 }
-console.log('updateCourse', updateCourse)
 
 const deleteCourse = async (id) => {
     try {
@@ -55,4 +54,24 @@ const deleteCourse = async (id) => {
     }
 }
 
-export {getListClass, getCourseList, getCourseById, createCourse, updateCourse, deleteCourse};
+const createVideoClass = async (form) => {
+    try {
+        return await api.post(`course/video`, form);
+    } catch (error) {
+        console.error('createVideoClass - Erro na criaçãol da aula do curso', error);
+        return error;
+    }
+}
+
+const videoPathUpload = async (body, courseId, classNumber) => {
+    let formData = new FormData();
+    formData.append('videoPath', body)
+    try {
+        return await api.post(`course/upload/${courseId}/${classNumber}`, formData);
+    } catch (error) {
+        console.error('videoPathUpload - Erro no upload do video', error);
+        return error;
+    }
+}
+
+export {getListClass, getCourseList, getCourseById, createCourse, updateCourse, deleteCourse, createVideoClass, videoPathUpload};
