@@ -79,7 +79,7 @@ const CoursePage = () => {
                             classList && classList.map((item) => (
                                 <Card
                                     key={item.id}
-                                    onClick={() => navigate()}
+                                    onClick={() => navigate(`/aula/${courseInfo.courseId}/${item.classNumber}`)}
                                     title={<><b>Aula {item.number}: </b> {item.title} </>}
                                     body={item.description}
                                 />

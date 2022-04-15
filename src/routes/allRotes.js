@@ -8,6 +8,7 @@ import Homepage from '../pages/Homepage';
 import CoursePage from '../pages/CoursePage';
 import Administrator from '../pages/Administrator';
 import CreateClassPage from '../pages/CreateClassPage';
+import ClassPage from '../pages/ClassPage';
 
 const AllRotes = () => {
     return (
@@ -17,6 +18,7 @@ const AllRotes = () => {
                 <Route path="/nova-aula/:courseId" element={<CreateClassPage />} />
                 <Route path="/admin" element={<Administrator />} />
                 <Route path="/teste" element={<TestPage />} />
+                <Route path="/aula/:id/:number" element={<ClassPage />} />
             </Routes>
     )
 }

@@ -72,6 +72,23 @@ const videoPathUpload = async (body, courseId, classNumber) => {
         console.error('videoPathUpload - Erro no upload do video', error);
         return error;
     }
+};
+
+const getVideo = async (courseId, classNumber) => {
+    try {
+        return await api.get(`course/${courseId}/${classNumber}`);
+    } catch (error) {
+        console.error('getVideo - Erro na busca do v[ideo', error);
+        return error;
+    }
 }
 
-export {getListClass, getCourseList, getCourseById, createCourse, updateCourse, deleteCourse, createVideoClass, videoPathUpload};
+const getClass = async (courseId, classNumber) => {
+    try {
+        return await api.get(`course/video/${courseId}/${classNumber}`);
+    } catch (error) {
+        console.error('get class - Erro na busca do v[ideo', error);
+        return error;
+    }
+}
+export {getListClass, getCourseList, getCourseById, createCourse, updateCourse, deleteCourse, createVideoClass, videoPathUpload, getVideo, getClass};

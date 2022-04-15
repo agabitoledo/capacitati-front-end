@@ -3,6 +3,7 @@ import Counter from '../../components/Counter';
 import Modal from '../../components/UserInterface/Modal';
 import LoginForm from '../../components/LoginForm';
 import * as UserService from '../../services/Users'
+import VideoPlayer from '../../components/VideoPlayer';
 
 
 function TestePage() {
@@ -18,6 +19,7 @@ function TestePage() {
   return (
     <>
         <div>
+          <VideoPlayer />
           <Counter initial={0} />
           <button onClick={(e) => setIsModalVisible(true)}>Open</button>
           {isModalVisible ?
