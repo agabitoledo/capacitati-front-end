@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useVideoPlayer from '../../hooks/useVideoPlayer';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faPlay, faVolumeUp, faPause, faVolumeXmark, faUpRightAndDownLeftFromCenter} from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faVolumeUp, faPause, faVolumeXmark, faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
+import { updateProgress } from '../../services/Courses';
 
 export const ContainerVideoPlayer = styled.div`
 video {
@@ -101,6 +102,7 @@ video {
 const VideoPlayer = (props) => {
   const videoElement = useRef(null);
   const wrapper = useRef(null);
+  const [isWatched, setIsWatched] = useState(false)
 
   const {
     playerState,
@@ -113,19 +115,27 @@ const VideoPlayer = (props) => {
 
   const toggleFullscreen = () => {
     if (document.fullscreenElement) {
-        document.exitFullscreen()
+      document.exitFullscreen()
     }
     if (wrapper.current.requestFullScreen) {
       wrapper.current.requestFullScreen();
     } else if (wrapper.current.msRequestFullScreen) {
-        wrapper.current.msRequestFullScreen();
+      wrapper.current.msRequestFullScreen();
     } else if (wrapper.current.mozRequestFullScreen) {
-        wrapper.current.mozRequestFullScreen();
+      wrapper.current.mozRequestFullScreen();
     } else if (wrapper.current.webkitRequestFullScreen) {
-        wrapper.current.webkitRequestFullScreen();
+      wrapper.current.webkitRequestFullScreen();
     }
-}
+  };
 
+  useEffect(() => {
+    if (playerState.progress > 80 && isWatched === false) {
+      console.log('foivisto')
+      setIsWatched(true);
+      updateProgress(props.courseId, props.userId, props.classNumber).then(() => props.handleWatched(props.classNumber));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playerState.progress, isWatched]);
 
   return (
     <ContainerVideoPlayer>
@@ -164,7 +174,7 @@ const VideoPlayer = (props) => {
             <option value="1.25">1.25x</option>
             <option value="2">2x</option>
           </select>
-          
+
           <button className="mute-btn" onClick={toggleMute}>
             {!playerState.isMuted ? (
               <FontAwesomeIcon className="control-buttons" icon={faVolumeUp} />

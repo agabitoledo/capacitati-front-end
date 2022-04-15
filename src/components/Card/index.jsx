@@ -16,12 +16,14 @@ const StyledCard = styled.button`
     -webkit-box-shadow: 0px 2px 4px 2px rgba(0,0,0,0.025);
     box-shadow: 0px 2px 4px 2px rgba(0,0,0,0.20);
     margin: 5px 0;
+    opacity: ${props => props.disabled ? '0.5' : '1'};
+    cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
     .card-header {
         font-size: 24px;
         color: #333;
         font-weight: bold;
     }
-    
+
     .card-text {
         font-size: 16px;
         color: #666;
@@ -29,11 +31,10 @@ const StyledCard = styled.button`
     }
 `
 const Card = (props) => {
-
     return <StyledCard {...props}>
         <h2 className="card-header">{props.title}</h2>
         <p className="card-text">{props.body}</p>
     </StyledCard>
-}
+};
 
-export {Card};
+export { Card };

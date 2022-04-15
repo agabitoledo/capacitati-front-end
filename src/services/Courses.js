@@ -1,8 +1,9 @@
+import fileDownload from "js-file-download";
 import api from "./api";
 
 const getListClass = async (courseId) => {
     try {
-       return await api.get(`course/list/${courseId}`)
+        return await api.get(`course/list/${courseId}`)
     } catch (error) {
         console.error('getListClassService', error);
         return error;
@@ -11,7 +12,7 @@ const getListClass = async (courseId) => {
 
 const getCourseList = async () => {
     try {
-       return await api.get('course');
+        return await api.get('course');
     } catch (error) {
         console.error('getCourseListService', error);
         return error;
@@ -36,7 +37,7 @@ const createCourse = async (form) => {
     }
 }
 
-const  updateCourse = async (id, body) => {
+const updateCourse = async (id, body) => {
     try {
         return await api.put(`course/${id}`, body);
     } catch (error) {
@@ -81,7 +82,7 @@ const getVideo = async (courseId, classNumber) => {
         console.error('getVideo - Erro na busca do v[ideo', error);
         return error;
     }
-}
+};
 
 const getClass = async (courseId, classNumber) => {
     try {
@@ -90,5 +91,35 @@ const getClass = async (courseId, classNumber) => {
         console.error('get class - Erro na busca do v[ideo', error);
         return error;
     }
-}
-export {getListClass, getCourseList, getCourseById, createCourse, updateCourse, deleteCourse, createVideoClass, videoPathUpload, getVideo, getClass};
+};
+
+const generatePdf = async (courseId, userId) => {
+    try {
+        return await api.get(`course/certificate/${courseId}/${userId}`, { responseType: 'blob' })
+            .then((response) => fileDownload(response.data, 'certificado.pdf'));
+    } catch (error) {
+        console.error('get generate pdf - Erro ao gerar certificado', error);
+        return error;
+    }
+};
+
+const checkProgress = async (courseId, userId) => {
+    try {
+        return await api.get(`course/progress/${courseId}/${userId}`);
+    } catch (error) {
+        console.error('get checkprogress - erro na busca do progresso do curso', error);
+        return error;
+    }
+};
+
+const updateProgress = async (courseId, userId, lastSeen) => {
+    try {
+        return await api.post(`course/progress/${courseId}/${userId}`, { lastSeen: lastSeen });
+    } catch (error) {
+        console.error('updateProgress - erro na atualização do progresso do curso', error);
+        return error;
+    }
+};
+
+
+export { getListClass, getCourseList, getCourseById, createCourse, updateCourse, deleteCourse, createVideoClass, videoPathUpload, getVideo, getClass, generatePdf, checkProgress, updateProgress };

@@ -17,9 +17,9 @@ const useVideoPlayer = (videoElement) => {
     };
 
     useEffect(() => {
-      playerState.isPlaying
-        ? videoElement.current.play()
-        : videoElement.current.pause();
+        playerState.isPlaying
+            ? videoElement.current.play()
+            : videoElement.current.pause();
     }, [playerState.isPlaying, videoElement]);
 
     const handleOnTimeUpdate = () => {
@@ -62,16 +62,12 @@ const useVideoPlayer = (videoElement) => {
         });
     };
 
-    // const toggleFullScreen = () => {
-
-    // }
-
     useEffect(() => {
-      playerState.isMuted
-        ? (videoElement.current.muted = true)
-        : (videoElement.current.muted = false)
+        playerState.isMuted
+            ? (videoElement.current.muted = true)
+            : (videoElement.current.muted = false)
     }, [playerState.isMuted, videoElement]);
-    
+
     return {
         playerState,
         togglePlay,
@@ -79,7 +75,6 @@ const useVideoPlayer = (videoElement) => {
         handleVideoProgress,
         handleVideoSpeed,
         toggleMute,
-        // toggleFullScreen,
     }
 };
 

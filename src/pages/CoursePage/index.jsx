@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getCourseById, getListClass } from '../../services/Courses';
+import { checkProgress, generatePdf, getCourseById, getListClass } from '../../services/Courses';
 import { Card } from '../../components/Card';
 import styled from 'styled-components';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -49,16 +49,20 @@ const CourseContainer = styled.div`
 const CoursePage = () => {
     const [classList, setClassList] = useState([]);
     const [courseInfo, setCourseInfo] = useState({});
-    const { isAdmin } = React.useContext(AuthContext);
+    const [lastSeen, setLastSeen] = useState(0);
+    const { isAdmin, userInfo } = React.useContext(AuthContext);
 
     const params = useParams();
     const navigate = useNavigate();
 
-    const getInformation = async (id) => {
-        const classes = await getListClass(id);
-        const course = await getCourseById(id);
+    const getInformation = async (courseId, userId) => {
+        const classes = await getListClass(courseId);
+        const course = await getCourseById(courseId);
+        const progress = await checkProgress(courseId, userId)
         setClassList(classes.data);
         setCourseInfo(course.data[0]);
+        setLastSeen(progress.data.lastSeen);
+
     };
 
     useEffect(() => {
@@ -78,8 +82,11 @@ const CoursePage = () => {
                         {
                             classList && classList.map((item) => (
                                 <Card
+                                    disabled={lastSeen + 1 < item.classNumber }
                                     key={item.id}
-                                    onClick={() => navigate(`/aula/${courseInfo.courseId}/${item.classNumber}`)}
+                                    onClick={() => {
+                                       if(lastSeen + 1 >= item.classNumber) navigate(`/aula/${courseInfo.courseId}/${item.classNumber}`)
+                                    }}
                                     title={<><b>Aula {item.number}: </b> {item.title} </>}
                                     body={item.description}
                                 />
@@ -89,6 +96,9 @@ const CoursePage = () => {
                     <div className="description">
                         <h3 className="title-description">Sobre este curso</h3>
                         <p className="info-description">{courseInfo.description}</p>
+                        <UiButton onClick={()=> generatePdf(params.id, userInfo.user.userId)}>
+                            Download do certificado
+                        </UiButton>
                     </div>
                 </CourseContainer>
             </div>
