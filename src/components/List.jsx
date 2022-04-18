@@ -23,7 +23,6 @@ const List = ({initial})=>{
         setCurrentValue('');
     }
 
-
     React.useEffect(()=>{
         console.log('testando')
     })
@@ -46,7 +45,6 @@ const List = ({initial})=>{
             </ul>
         </>
     )
-
 }
 
 export default List;
