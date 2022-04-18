@@ -23,7 +23,6 @@ const useVideoPlayer = (videoElement) => {
     }, [playerState.isPlaying, videoElement]);
 
     const handleOnTimeUpdate = () => {
-        console.log('handleOnTimeUpdate', handleOnTimeUpdate);
         const progress = (videoElement.current.currentTime / videoElement.current.duration) * 100;
         setPlayerState({
             ...playerState,
@@ -32,8 +31,6 @@ const useVideoPlayer = (videoElement) => {
     };
 
     const handleVideoProgress = (event) => {
-        console.log('handleVideoProgress', handleVideoProgress);
-
         const manualChange = Number(event.target.value);
         videoElement.current.currentTime = (videoElement.current.duration / 100) * manualChange;
         setPlayerState({
@@ -43,8 +40,6 @@ const useVideoPlayer = (videoElement) => {
     };
 
     const handleVideoSpeed = (event) => {
-        console.log('handleVideoSpeed', handleVideoSpeed);
-
         const speed = Number(event.target.value);
         videoElement.current.playbackRate = speed;
         setPlayerState({
@@ -54,8 +49,6 @@ const useVideoPlayer = (videoElement) => {
     };
 
     const toggleMute = () => {
-        console.log('toggleMute', toggleMute);
-
         setPlayerState({
             ...playerState,
             isMuted: !playerState.isMuted,

@@ -88,7 +88,7 @@ const getClass = async (courseId, classNumber) => {
     try {
         return await api.get(`course/video/${courseId}/${classNumber}`);
     } catch (error) {
-        console.error('get class - Erro na busca do v[ideo', error);
+        console.error('get class - Erro na busca do video', error);
         return error;
     }
 };

@@ -12,7 +12,6 @@ const CreateClassContainer = styled.div`
     flex-direction: row;
     align-items: stretch;
     justify-content: space-between;
-    color: red;
 
     .list-row {
         display: flex;
@@ -30,7 +29,7 @@ const CreateClassContainer = styled.div`
 
     .description {
         width: 35%;
-        color: purple;
+        color: #1A1414;
         margin-top: 24px;
         .title-description{
             font-size: 32px;
@@ -45,16 +44,15 @@ const CreateClassContainer = styled.div`
 `
 
 const CreateClassPage = (props) => {
-    // const [step, setStep] = React.useState(0);
-    const [teste, setTeste] = React.useState([]);
+    const [list, setList] = React.useState([]);
 
     const listagemDeAulas = async (courseId) => {
-        const supimpa = await getListClass(courseId);
-        setTeste(supimpa.data)
+        const listagem = await getListClass(courseId);
+        setList(listagem.data)
     }
 
     console.log('sera que foi', listagemDeAulas)
-    console.log(' foi', teste)
+    console.log(' foi', list)
     const params = useParams();
 
     return (

@@ -11,6 +11,15 @@ const FormCreateClass = styled.form`
     padding: 8px;
     display: flex;
     flex-direction: column;
+    .ui-button-create-class {
+        background-color: #1F1919;
+            border-color: #1F1919;
+            color: #f594a7;
+        &:hover {
+            background-color: #f594a7cf;
+            color: #1F1919;
+            }
+    }
 `
 const InputCreateClass = styled.input`
 font-family: inherit;
@@ -23,9 +32,8 @@ font-family: inherit;
   color: $white;
   padding: 7px 10px;
   margin: 6px;
-  /* background: #458; */
   &:hover {
-      border-color: #d1d12cdd;
+      border-color: #F77896;
   }
 `
 const CreateClassForm = (props) => {
@@ -82,7 +90,7 @@ const CreateClassForm = (props) => {
                             <InputCreateClass type='text' name='classNumber' placeholder='Numero da aula' onChange={handleInput} value={form.classNumber || ''} />
                             <InputCreateClass type='text' name='courseIdRefVideos' placeholder='Id do curso que a aula pertence' onChange={handleInput} value={form.courseIdRefVideos || ''} />
                             <InputCreateClass type='text' name='description' placeholder='Descrição da aula' onChange={handleInput} value={form.description || ''} />
-                            <UiButton type="submit" onClick={(e)=>handleSubimit(e)}>Criar nova aula</UiButton >
+                            <UiButton className='ui-button-create-class' type="submit" onClick={(e)=>handleSubimit(e)}>Criar nova aula</UiButton >
                         </FormCreateClass>
                     </div>
                 )
@@ -103,7 +111,7 @@ const CreateClassForm = (props) => {
                     </FormCreateClass>
                 </div>)
             default:
-                return <h1>nao foi fewito ainda</h1>
+                return <h1>nao foi feito ainda</h1>
         }
     }
 

@@ -15,7 +15,6 @@ const ContainerClass = styled.div`
     flex-direction: row;
     align-items: stretch;
     justify-content: space-between;
-    color: red;
 
     .video-row {
         display: flex;
@@ -29,15 +28,13 @@ const ContainerClass = styled.div`
             font-size: 46px;
             font-weight: normal;
             margin: 16px 0;
-            .muted {
-                color:#054d0b;
-            }
+            color: #CA546B;
         }
     }
 
     .description {
         width: 35%;
-        color: purple;
+        color: #000000;
         margin-top: 24px;
         .title-description{
             font-size: 32px;
@@ -52,12 +49,11 @@ const ContainerClass = styled.div`
 `
 
 const ClassPage = () => {
-    const [classList, setClassList] = useState([]);
-    const [videoPath, setVideoPath] = useState('');
+    const [classList, setClassList] = useState({});
     const [nextClassInfo, setNext] = useState([]);
+    const [videoPath, setVideoPath] = useState('');
     const { userInfo } = useContext(AuthContext);
     const [lastSeen, setLastSeen] = useState(0);
-
 
     const params = useParams();
     const navigate = useNavigate();
@@ -79,7 +75,8 @@ const ClassPage = () => {
     }, [params.id, params.number]);
 
     const handleWatched = (value) => {
-        setLastSeen(value);
+        console.log('hahaha', value)
+        setLastSeen(Number(value));
     };
 
     return (
@@ -92,27 +89,28 @@ const ClassPage = () => {
                             &&
                             <VideoPlayer
                                 videoPath={videoPath}
-                                courseId={params.courseId}
+                                courseId={params.id}
                                 userId={userInfo.user.userId}
-                                classNumber={params.classNumber}
+                                classNumber={params.number}
                                 handleWatched={handleWatched}
                             />
                         }
                         <div className="title-header">
-                            <span className="muted">Aula: {classList.classNumber} - </span>
-                            {classList.title}
+                            <span> Aula {classList.classNumber} - {classList.title}</span>
                         </div>
                     </div>
 
                     <div className="description">
-                        <h3 className="title-description">Sobre este curso</h3>
+                        <h3 className="title-description">Esta aula fala sobre ...</h3>
                         <p className="info-description">{classList.description}</p>
                         {
                             nextClassInfo === undefined
                                 ? <Card title={"Me desculpe"} body={"Em breve vamos trazer uma nova aula para você!"} />
                                 : <Card
                                     disabled={lastSeen + 1 < nextClassInfo.classNumber}
-                                    title={nextClassInfo.title} onClick={() => {
+                                    title={'Próxima aula...'}
+                                    body={nextClassInfo.title}
+                                    onClick={() => {
                                         setVideoPath()
                                         navigate(`/aula/${params.id}/${nextClassInfo.classNumber}`)
                                     }

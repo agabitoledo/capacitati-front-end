@@ -1,8 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import useVideoPlayer from '../../hooks/useVideoPlayer';
+import useVideoPlayer from '../../utils/hooks/useVideoPlayer';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faPlay, faVolumeUp, faPause, faVolumeXmark, faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
 import { updateProgress } from '../../services/Courses';
 
@@ -32,9 +31,9 @@ video {
     bottom: 30px;
     padding: 14px;
     width: 100%;
-    max-width: 500px;
+    max-width: 80%;
     flex-wrap: wrap;
-    background: rgba(255, 255, 255, 0.25);
+    background: #f0aebe8b;
     box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -58,27 +57,24 @@ video {
   }
   
   input[type="range"] {
-    -webkit-appearance: none !important;
-    background: rgba(255, 255, 255, 0.2);
+    background: #F77896;
     border-radius: 20px;
     height: 4px;
-    width: 350px;
+    width: 200px;
   }
   
   input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none !important;
     cursor: pointer;
     height: 6px;
   }
   
   input[type="range"]::-moz-range-progress {
-    background: white;
   }
   
   .velocity {
     appearance: none;
     background: none;
-    color: #1bda4e;
+    color: #0e0e0e;
     outline: none;
     border: none;
     text-align: center;
@@ -94,7 +90,6 @@ video {
   
   .mute-btn i {
     background-color: none;
-    color: #e42222;
     font-size: 20px;
   }
 `
@@ -102,7 +97,7 @@ video {
 const VideoPlayer = (props) => {
   const videoElement = useRef(null);
   const wrapper = useRef(null);
-  const [isWatched, setIsWatched] = useState(false)
+  const [isWatched, setIsWatched] = useState(false);
 
   const {
     playerState,
@@ -113,29 +108,31 @@ const VideoPlayer = (props) => {
     toggleMute,
   } = useVideoPlayer(videoElement);
 
-  const toggleFullscreen = () => {
+  const toggleFullScreen = () => {
     if (document.fullscreenElement) {
       document.exitFullscreen()
     }
-    if (wrapper.current.requestFullScreen) {
-      wrapper.current.requestFullScreen();
-    } else if (wrapper.current.msRequestFullScreen) {
-      wrapper.current.msRequestFullScreen();
+    if (wrapper.current.requestFullscreen) {
+      wrapper.current.requestFullscreen();
+    } else if (wrapper.current.msRequestFullscreen) {
+      wrapper.current.msRequestFullscreen();
     } else if (wrapper.current.mozRequestFullScreen) {
       wrapper.current.mozRequestFullScreen();
-    } else if (wrapper.current.webkitRequestFullScreen) {
-      wrapper.current.webkitRequestFullScreen();
+    } else if (wrapper.current.webkitRequestFullscreen) {
+      wrapper.current.webkitRequestFullscreen();
     }
   };
 
   useEffect(() => {
-    if (playerState.progress > 80 && isWatched === false) {
+    if (playerState.progress > 5 && isWatched === false) {
       console.log('foivisto')
       setIsWatched(true);
-      updateProgress(props.courseId, props.userId, props.classNumber).then(() => props.handleWatched(props.classNumber));
+      console.log("isWatched", isWatched);
+      updateProgress(props.courseId, props.userId, props.classNumber).then(() => {
+        props.handleWatched(props.classNumber)
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playerState.progress, isWatched]);
+  }, [playerState.progress, isWatched, props]);
 
   return (
     <ContainerVideoPlayer>
@@ -150,9 +147,7 @@ const VideoPlayer = (props) => {
             <button onClick={togglePlay}>
               {!playerState.isPlaying ? (
                 <FontAwesomeIcon className="control-buttons" icon={faPlay} />
-
               ) : (
-
                 <FontAwesomeIcon className="control-buttons" icon={faPause} />
               )}
             </button>
@@ -184,8 +179,7 @@ const VideoPlayer = (props) => {
 
           </button>
 
-          <button className="mute-btn" onClick={toggleFullscreen}>
-            AA
+          <button className="mute-btn" onClick={toggleFullScreen}>
             <FontAwesomeIcon className="control-buttons" icon={faUpRightAndDownLeftFromCenter} />
           </button>
         </div>

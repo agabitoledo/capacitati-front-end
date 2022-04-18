@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -16,7 +17,7 @@ const StyledHeader = styled.nav`
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    background-color: #54d3c8;
+    background-color: #1F1919;
     color: #6666;
     padding: 0 32px;
     flex-grow: 0;
@@ -27,32 +28,38 @@ const StyledHeader = styled.nav`
         margin-left: 16px;
         align-items: center;
         text-decoration: none;
-        color: #000;
+        color: #F77896;
     }
 `
 const Dropdown = styled.div`
     position: relative;
     display: inline-block;
     padding: 10px;
-    background-color: #4CAF50;
-    color: #1b1a1a;
+    background: none;
+    color: #F77896;
+    font-size: 18px;
+    &:hover {
+        color: #F77896;
+    }
   .dropdown-content{
+    box-sizing: border-box;
       display: none;
       position: absolute;
       padding: 0;
       right: 0;
       top: 40px;
-      background-color: aliceblue;
-      width: 120px;
+      width: 140px;
       box-shadow: 0px 8px 16px 0 rgba(0,0,0,0.2);
       z-index: 1;
+      background-color:#555555e9;
+      color: #f0b1c0;
     p {
-        background-color: aquamarine;
         margin: 0;
         padding: 1em;
     }  
     p:hover {
-        background-color: #4CAF50;
+        background-color: #150f0f;
+        color: #F77896;
     }  
   }
 
@@ -60,37 +67,35 @@ const Dropdown = styled.div`
       display: block;
   }
 `
-// const FormStyled = styled(LoginForm)`
-// background: red;
-// `
 
 const Header = (props) => {
     const { userInfo, setUserInfo } = React.useContext(AuthContext);
     const navigate = useNavigate();
     const [isOpen, setOpen] = React.useState(false)
 
-
     return (
         <>
-        {
-            isOpen &&
-            <Modal onClose={() => setOpen(false)}> <LoginForm /> </Modal>
-        }
+            {
+                isOpen &&
+                <Modal onClose={() => setOpen(false)}> <LoginForm /> </Modal>
+            }
             <StyledHeader {...props}>
-                <Link className='logo-header' to='/'>Hitss On</Link>
+                <Link className='logo-header' to='/'>
+                    HitssOn
+                </Link>
                 {
-                userInfo 
-                    ? 
-                    <Dropdown className='dropdown'>
-                        <span>{userInfo.user.firstName}</span>
-                        <div className='dropdown-content'>
-                            <p onClick={()=> navigate('/teste')}>TestPage</p>
-                            <p onClick={()=> navigate('/admin')}>Administrador</p>
-                            <p onClick={()=> setUserInfo(null)}>Logout</p>
-                        </div>
-                    </Dropdown> 
-                    :
-                    <UiButton onClick={() => setOpen(true)}>Logar</UiButton>
+                    userInfo
+                        ?
+                        <Dropdown className='dropdown'>
+                            <span>{userInfo.user.firstName}</span>
+                            <div className='dropdown-content'>
+                                <p onClick={() => navigate('/teste')}>TestPage</p>
+                                <p onClick={() => navigate('/admin')}>Administrador</p>
+                                <p onClick={() => setUserInfo(null)}>Logout</p>
+                            </div>
+                        </Dropdown>
+                        :
+                        <UiButton onClick={() => setOpen(true)}>Logar</UiButton>
                 }
             </StyledHeader>
         </>

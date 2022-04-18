@@ -12,18 +12,17 @@ const FormAddCourse = styled.form`
 `
 const InputAddCourse = styled.input`
 font-family: inherit;
-  border: 1px solid;
+  border: 2px solid;
   border-bottom: 2px solid $gray;
   border-radius: 4px;
   border-color: #bebeb6dd;
-  outline: 0;
+  outline: 1;
   font-size: 1.3rem;
   color: $white;
   padding: 7px 10px;
   margin: 6px;
-  /* background: #458; */
   &:hover {
-      border-color: #d1d12cdd;
+      border-color: #f0b1c0;
   }
 `
 const AddCourseForm = (props) => {

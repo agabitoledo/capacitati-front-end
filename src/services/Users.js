@@ -1,4 +1,5 @@
 import api from "./api";
+
 const getUserList = async () => {
     try {
         return await api.get('user')
@@ -16,4 +17,32 @@ const login = form => {
     }
 }
 
-export {getUserList, login};
+const createUser = async (form) => {
+    try {
+        return await api.post('user', form)
+    } catch (error) {
+        console.log("erro ao criar o usuario", error);
+        return error
+    }
+}
+
+const deleteUser = async (id) => {
+    try {
+        return await api.delete(`user/${id}`);
+    } catch (error) {
+        console.error('Erro na exclusão do usuário', error);
+        return error;
+    }
+}
+
+const updateUser = async (id, body) => {
+    try {
+        return await api.put(`user/${id}`, body);
+    } catch (error) {
+        console.error('Erro na edição/atualização do usuário', error);
+        return error;
+    }
+}
+
+
+export {getUserList, login, createUser, deleteUser, updateUser};

@@ -14,7 +14,7 @@ const CourseContainer = styled.div`
     flex-direction: row;
     align-items: stretch;
     justify-content: space-between;
-    color: red;
+    color: #F77896;
 
     .list-row {
         display: flex;
@@ -28,11 +28,20 @@ const CourseContainer = styled.div`
             font-weight: normal;
             margin: 16px 0;
         }
+        .ui-button-add-class{
+            background-color: #1F1919;
+            border-color: #1F1919;
+            color: #f594a7;
+        &:hover {
+            background-color: #f594a7cf;
+            color: #1F1919;
+            }
+        }
     }
 
     .description {
         width: 35%;
-        color: purple;
+        color: #150F0F;
         margin-top: 24px;
         .title-description{
             font-size: 32px;
@@ -42,6 +51,15 @@ const CourseContainer = styled.div`
         .info-description {
             font-size: 16px;
             line-height: 1.4;
+        }
+        .ui-button-certificado {
+            background-color: #1F1919;
+            border-color: #1F1919;
+            color: #f594a7;
+        &:hover {
+            background-color: #f594a7cf;
+            color: #1F1919;
+            }
         }
     }
 `
@@ -62,7 +80,6 @@ const CoursePage = () => {
         setClassList(classes.data);
         setCourseInfo(course.data[0]);
         setLastSeen(progress.data.lastSeen);
-
     };
 
     useEffect(() => {
@@ -77,17 +94,19 @@ const CoursePage = () => {
                         <div className="title-header">{courseInfo.title}</div>
                         {
                             isAdmin &&
-                            <UiButton onClick={() => navigate(`/nova-aula/${courseInfo.courseId}`)}>Adicionar aula</UiButton>
+                            <UiButton className="ui-button-add-class" onClick={() => navigate(`/nova-aula/${courseInfo.courseId}`)}>Adicionar aula</UiButton>
                         }
                         {
                             classList && classList.map((item) => (
                                 <Card
-                                    disabled={lastSeen + 1 < item.classNumber }
+                                    disabled={lastSeen + 1 < item.classNumber}
                                     key={item.id}
                                     onClick={() => {
-                                       if(lastSeen + 1 >= item.classNumber) navigate(`/aula/${courseInfo.courseId}/${item.classNumber}`)
+                                        if (item.classNumber) {
+                                            return (navigate(`/aula/${courseInfo.courseId}/${item.classNumber}`))
+                                        }
                                     }}
-                                    title={<><b>Aula {item.number}: </b> {item.title} </>}
+                                    title={<><b>Aula {item.classNumber}: </b> {item.title} </>}
                                     body={item.description}
                                 />
                             ))
@@ -96,7 +115,7 @@ const CoursePage = () => {
                     <div className="description">
                         <h3 className="title-description">Sobre este curso</h3>
                         <p className="info-description">{courseInfo.description}</p>
-                        <UiButton onClick={()=> generatePdf(params.id, userInfo.user.userId)}>
+                        <UiButton className="ui-button-certificado" onClick={() => generatePdf(params.id, userInfo.user.userId)}>
                             Download do certificado
                         </UiButton>
                     </div>
