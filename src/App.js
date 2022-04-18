@@ -1,32 +1,22 @@
 import React from 'react';
-import Counter from './components/Counter';
-import Modal from './components/Modal';
-import './assets/style.scss';
-import LoginForm from './components/LoginForm';
-import * as UserService from './services/Users'
+import Header from './components/UserInterface/Header';
+import AllRotes from './routes/allRotes.js';
+import styled from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
+import 'normalize.css';
 
-function App() {
-  const [isModalVisible, setIsModalVisible] = React.useState(false)
-
-
-  React.useEffect(() => {
-    UserService.getUserList()
-      .then((response) => console.log(response.data))
-      .catch((err) => { console.error('ops! ocorreu um erro' + err) });
-  }, [])
-
+export const PageContainer = styled.div`
+  padding-top: 80px;
+  padding-left: 48px;
+`
+function App(props) {
   return (
-    <>
-        <div>
-          <Counter initial={0} />
-          <button onClick={(e) => setIsModalVisible(true)}>Open</button>
-          {isModalVisible ?
-            <Modal onClose={() => setIsModalVisible(false)}>
-              <h1>MODAL</h1>
-              <LoginForm />
-            </Modal> : null}
-        </div>
-    </>
+    <BrowserRouter>
+      <Header {...props} />
+      <PageContainer>
+        <AllRotes />
+      </PageContainer>
+    </BrowserRouter>
   );
 }
 
